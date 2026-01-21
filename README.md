@@ -99,5 +99,3 @@ To run this project locally, follow these steps:
     flutter run
     ```
 
-## 📄 License
-This project is open-source and available for use under standard open-source licenses.
