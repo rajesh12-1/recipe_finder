@@ -88,11 +88,7 @@ class _RecipeListPageState extends State<RecipeListPage> {
              builder: (context, provider, child) {
                if (provider.categories.isEmpty) return const SizedBox.shrink();
                
-               // Create a list with 'All' at the start
-               final categoriesToShow = [
-                 {'strCategory': 'All'}, 
-                 ...provider.categories
-               ];
+               final categoriesToShow = provider.categories;
 
                return SizedBox(
                  height: 50,

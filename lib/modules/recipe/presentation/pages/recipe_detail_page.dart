@@ -50,7 +50,7 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
       body: Consumer<RecipeDetailProvider>(
         builder: (context, provider, child) {
           if (provider.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const _RecipeDetailSkeleton();
           }
 
           if (provider.errorMessage != null) {
@@ -186,6 +186,78 @@ class _YoutubePlayerWidgetState extends State<_YoutubePlayerWidget> {
     return YoutubePlayer(
       controller: _controller,
       showVideoProgressIndicator: true,
+    );
+  }
+}
+
+class _RecipeDetailSkeleton extends StatelessWidget {
+  const _RecipeDetailSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          expandedHeight: 300,
+          pinned: true,
+          flexibleSpace: FlexibleSpaceBar(
+            background: const LoadingShimmer.rectangular(height: 300),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Chips ROW
+                  Row(
+                    children: const [
+                       LoadingShimmer.rectangular(height: 32, width: 80),
+                       SizedBox(width: 8),
+                       LoadingShimmer.rectangular(height: 32, width: 60),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  // Ingredients Header
+                  const LoadingShimmer.rectangular(height: 24, width: 120),
+                  const SizedBox(height: 10),
+                  const Divider(),
+                  
+                  // Ingredients List Items
+                  ...List.generate(5, (index) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: const [
+                         LoadingShimmer.circular(width: 8, height: 8),
+                         SizedBox(width: 10),
+                         LoadingShimmer.rectangular(height: 14, width: 200),
+                      ],
+                    ),
+                  )),
+                  const SizedBox(height: 20),
+
+                  // Instructions Header
+                  const LoadingShimmer.rectangular(height: 24, width: 120),
+                  const SizedBox(height: 10),
+                  const Divider(),
+
+                  // Instructions Text
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(10, (index) => const Padding(
+                      padding: EdgeInsets.only(bottom: 8.0),
+                      child: LoadingShimmer.rectangular(height: 14, width: double.infinity),
+                    )),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ),
+      ],
     );
   }
 }
